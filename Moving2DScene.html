@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Scene Graph 2D</title>
+
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=6GCInBUV3NyZe52qU7b7Fr8iHTw9nxropo9g5PWUEnqpb5tTraxwLzN2orNqvBD_Kw2g0ShzzIezhpzb2SeRe4EfSZZpggfmfCtNOy5ayjp_ECf7rKEuaBV228M0s7hV09DN1dvyBXOwEEoXk3yf_2abPU1BEDO0nLaUHrLXzz5Tp1KvA64W7fYv7bn8HDfu8S1Dw24KIYNsBzNoNEyWHw" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb3Vyc2VzLm1zLndpdHMuYWMuemEvbW9vZGxlL3BsdWdpbmZpbGUucGhwLzY1NzkzL2Fzc2lnbnN1Ym1pc3Npb25fZmlsZS9zdWJtaXNzaW9uX2ZpbGVzLzE4MjE5NS9sYWIzLTMuaHRtbD9mb3JjZWRvd25sb2FkPTE"/><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=wlCaZscV6PiIAfZ0LzhWim-loRO4TnZXIUYNUkmVx9niCnq0pQ7fMwV3FiJNEqi4_QIWZ_204Z-fjjo5hB4KVoB_LmB7KQyE0LGBAXSPMYNx9K1OFiSiD7tuyDLKUdsRRof88Tj9PDfzMEvj0S_Kh8ypAMeXq39_8SpKp_SHUXcNOLk-UixNSxyvIYx5KZSu_4-U3Xpadxi0Czd-4Cxo0TeaDK2YyyQQGOcmz9K4owuYPKhewVVCxoUzfOsU_IfsZYm6ewPn9vtPLb3AtRAWkDiSNnBLXHla0tTL6r2D-cGwx2tz0jHuGyAmW1lub5e0tVjjynsfMVon92PMF-6PrhuGC-td1krrKYc1bTfXMlm-hqcrdvDlzkN8f2z1v-iVz_E3iPxY2-Kb7gvlOr9WaSMVVTnOxKd5pzpwGpu9D8YxCXNSNOqqCl-M7pNLUwZ3dAHy1lULnEGrTw9eyrgkS08sQwSJnoadZRcQvejT6y_rO8cm1rnMa-_RPRfNcL6quxM5RtDTRMNboQWngCEx1bIOlNWYQ-YDKpiU4or6dQjLfKdDD_HG-mNosCbvLYcuEpBNJNMRmmNx64n9vEVjj8kA9xVRQSG0VZm6K4Po3kTKAYZOeX0L6ZgTzyDt2HZzX8GqOYzA4LBNDmZJksAWG58HVohJwgJzVHRJCmZdqgFlMNyF9-sHoftPdbemh9sxZIn6tgJ2CdE-q9wVI1Q6CV7zhsdjsbZc8y0uv7NNj1PjUZSenN2jiwnWZXMJy6kbW079Y3zg6X-bgklkrn-f5p7iegkjeAyyy0gw8DD14FXJQVWYjdIR7US1CbJyKygO5IQLbZDzdhvwDn9nySFS0u4I5jlAdX6YvwlJblGYpE2W8-tDrzF2ywAi-D0pYL86NZNbRjnn4gPENoyxYkVz1oCFRZL8ak5RBv8Icf4xi4tsVem8aiDX7D0nnzpqIXhzelK-JxybeyPKJ3BIGeEk8UeAVL88rwlmFkZqyAL1wpJEM3vEilcvjzn4zhrwVprwAZJpsF5XKResum7XTpQUI_fcJiH15dHO1OdGxqAOrTb0D6hqGIQKMTlMxYqwnsHmOTBHlpYBhpMcCB8GFXeQ9MhzZzCtEI2E0YveKn-NONcq-PaYoNBizu7uzeC0y_77btqHlamkn5ryBvfs8BJu-R83TYbdOn9H7_sNyVKOiH9N0lg2YK7W0XC2sRPMmN3k6I9L_G70tj6aMM6SECvyESDYszLq-hNxbxSxjwBDd4PTPHwKTK7gjwbNXcOipdxeLOVnUJpXngeRGj4XMCCycjRsQGdmtNaV5Ql8BEQV7g0" nonce="82ef90443d483d861d08e5c5b4c0f681" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9tYWlsLWF0dGFjaG1lbnQuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2F0dGFjaG1lbnQvdS8wLz91aT0yJmlrPWI4NzBkZWU3NzImYXR0aWQ9MC4yJnBlcm1tc2dpZD1tc2ctZjoxNzI5NTU0ODcwNjE5MjAwMTUxJnRoPTE4MDA5Y2ZkYzJjZGRhOTcmdmlldz1hdHQmZGlzcD1zYWZlJnJlYWxhdHRpZD1mX2wxbHdra2RvMSZzYWRkYmF0PUFOR2pkSl9pWUpGSHl1TzVRSUZaQ09jQWVPMU9JNDlib2dSckFYcU11RjdkZm8yVzcweEo3bHdHdDdGS0psQlhKSklZeEFobTM5N1pLV3k0OTNNaC1UM0ozRUI0V1hTQTNZanMteEpvNG4xczZXdWgwU093bWFtTnBPdEV2MjVhNW1pRVM4czZsSEFaSEJOaXpHS2ZTWXFET2VLVFhXUmpjb1EyQzR6V0xwZXlUak40OHRNcEpTZjRLekJYNmNZWHJtaE92QzhfUG5RQmRPRXpuNmZNakZTWVJ1U2hNd0hvYklJaUtIQ3NHaFAtX1ROYk9EYTR1TVl6RHJjeDJMOXhtZWFfRzg2ejFWYWNUSVJRTFh4Z3l0VllxVzUzajZRSEU3QkdkV043WVdHNEVkemZjbWFZMkhWQUNNNTJYX2s0TmNnLU5iWGpBVURQV3c5c2IyQnVGbklZVmVxOVNxc1N0SGJvSVVfSmF3elVHeXpEU3g5aG44Vm1kM0s5UHY1dC1RVjkwMmJQaDJNMXlsclF6X1l4dHNtT0xCYWJDRldPYVNhQTJaQzZ5d09JS2t6bXJmNDZfVkl5bjRZSTVlYnY5dDF5UFprQ0N0c1haWU4tRWR3YXlQZlFMTmVsclR6VkVXTUQ3anRHUW5fQ2tQajZkQ205U1dqREtSNVdGVGJpb1VpTERLRDNIN0ludWZNVDVqeTNwbC03bUpNZjVZWThLdXBWV0d2aW1GN2s3UlFSUFBJa0g0R0g4bTFVX1dHVGtOc3ptSU9XdVJ6SHoybl85MmdvNDJPTFhEb2lYOXJoRk9fVXlNeXJ4cHpfOWIzXzIzaHZ4Rzc3dmxCb3JlMHNRRTJRWHBNSlViSEVkR3BWb2FiX1BOMFlXMzlfZXNGc1dnY05aUEl6UnM3NERwODJXY1B0b01MR3Q5OW1BYnZWdmlqSmMyQTNhMlhVRmFjd2ZSXzBsUnlwQ3dCclBYNElwN0w1WXBtRnZvdjV0WmhNSExiQ0VITVdtMWNGd21N"/><script>
+
+    var canvas;   // The canvas that is used as the drawing surface
+    var graphics; // The 2D graphics context for drawing on the canvas.
+
+    var X_LEFT = -4;    // The xy limits for the coordinate system.
+    var X_RIGHT = 4;
+    var Y_BOTTOM = -3;
+    var Y_TOP = 3;
+
+    var BACKGROUND = "white";  // The display is filled with this color before the scene is drawn.
+
+    var pixelSize;  // The size of one pixel, in the transformed coordinates.
+
+    var frameNumber = 0;  // Current frame number. goes up by one in each frame.
+
+    var world;  // A SceneGraphNode representing the entire scene.
+
+    // TODO: Define global variables to represent animated objects in the scene.
+	var sun;
+	var moon;
+    var Sky;
+	var mountain;
+	var pairShoes;
+	var pairShoes2;
+	var sonic;
+	var wave;
+	var ocean;
+	var leaf;
+	var sunflowerTop;
+	var sunflower;
+    /**
+     *  Builds the data structure that represents the entire picture.
+     */
+    function createWorld() {
+
+        world = new CompoundObject();  // Root node for the scene graph.
+
+        // TODO: Create objects and add them to the scene graph.
+		
+		//-----------------------------------------------------------------create moon
+		var moon = new CompoundObject();
+		moon.add(new TransformedObject(filledCircle).setColor("#f4f6f0"));
+		moon.add(new TransformedObject(circle).setScale(0.1,0.1).setColor("black"));
+		moon.add(new TransformedObject(circle).setScale(0.2,0.1).setTranslation(0.2,0.2).setColor("black"));
+		moon.add(new TransformedObject(circle).setScale(0.1,0.15).setTranslation(-0.21,-0.22).setColor("black"));
+		moon.add(new TransformedObject(circle).setScale(0.17,0.15).setTranslation(0.21,-0.22).setColor("black"));
+		moon.add(new TransformedObject(circle).setScale(0.19,0.15).setTranslation(-0.21,0.22).setColor("black"));
+		//-----------------------------------------------------------------end create moon
+		
+		//-----------------------------------------------------------------create sun
+		var tempsun = new CompoundObject();
+		for (i = 0; i < 12; i++) { 
+           tempsun.add( new TransformedObject(line).setScale(1.3,2.5).setRotation(i*30).setColor("#f48037") );
+        }
+		tempsun.add(new TransformedObject(filledCircle).setColor("#fce570"));
+		sun = new TransformedObject(tempsun);
+		//-----------------------------------------------------------------end create sun 
+		
+		//-----------------------------------------------------------------create the sky 
+		var nightSky = new CompoundObject();
+		nightSky.add(new TransformedObject(smicircle).setScale(6,6).setRotation(180).setColor("#2b2c5a"));
+		nightSky.add(new TransformedObject(smicircle).setScale(6,6).setColor("#87ceeb"));
+		
+		nightSky.add(new TransformedObject(sun).setScale(0.7,0.7).setTranslation(0,1.9));
+		//------------------------------------randomaly generates positions for the stars
+		for(i = 0; i<32;i++){
+			let sx = Math.random() * 3;
+			let sy = Math.random() * 2;
+			nightSky.add(new TransformedObject(filledCircle).setScale(0.01,0.01).setTranslation(sx,-sy).setColor("#fce570"));
+			nightSky.add(new TransformedObject(filledCircle).setScale(0.01,0.01).setTranslation(-sx,-sy).setColor("#fce570"));
+		}
+		nightSky.add(new TransformedObject(moon).setScale(0.7,0.7).setTranslation(0,-1.9));
+		Sky = new TransformedObject(nightSky);
+		//-----------------------------------------------------------------end create sky
+		
+		//-----------------------------------------------------------------create mountain
+		var mountain = new CompoundObject();
+		mountain.add(new TransformedObject(filledTriangle).setScale(8,1).setColor("#35231D"));
+		mountain.add(new TransformedObject(filledTriangle).setScale(3,1.1).setTranslation(-3,0).setColor("#8d6f44"));
+		mountain.add(new TransformedObject(filledTriangle).setScale(3,1.1).setTranslation(3,0).setColor("#5b5036"));
+		//-----------------------------------------------------------------end create mountain
+		
+		//-----------------------------------------------------------------create waves
+		var wavetemp = new CompoundObject();
+		wavetemp.add(new TransformedObject(line).setScale(0.4,1).setTranslation(0,-0.1).setColor("white"));
+		wavetemp.add(new TransformedObject(line).setScale(0.4,1).setTranslation(0.2,-0.12).setColor("white"));
+		
+		var linewave = new CompoundObject();
+		for (var i=-9;i<10;++i){
+			linewave.add(new TransformedObject(wavetemp).setTranslation(i,0));
+			linewave.add(new TransformedObject(wavetemp).setTranslation(i+0.3,-0.4));
+			linewave.add(new TransformedObject(wavetemp).setTranslation(i+0.5,-0.8));
+			linewave.add(new TransformedObject(wavetemp).setTranslation(i+0.7,-1.2));
+        }
+		wave = new TransformedObject(linewave);
+		//-----------------------------------------------------------------end create waves
+		
+		
+		//-----------------------------------------------------------------------------------------build sunflower
+		var tri = new TransformedObject(filledTriangle).setScale(0.3,0.3).setTranslation(0,0.19).setColor("yellow"); // for sunflower petal
+		var templeaf = new CompoundObject();
+		templeaf.add(new TransformedObject(filledRect).setScale(0.2,0.2).setRotation(45).setColor("green"));
+		templeaf.add(new TransformedObject(filledTriangle).setScale(0.3,0.15).setColor("#72d74e"));
+		leaf =  new TransformedObject(templeaf);
+		
+		var sunflowerTopTemp = new CompoundObject
+		//-------------------rotates the petals to form the flower
+		for(i = 0 ; i<7;i++){
+			sunflowerTopTemp.add(new TransformedObject(tri).setRotation(i*50));
+		}
+		sunflowerTopTemp.add(new TransformedObject(filledCircle).setScale(0.5,0.5));
+		sunflowerTop = new TransformedObject(sunflowerTopTemp);
+		
+		var sunflowerTemp = new CompoundObject();
+		sunflowerTemp.add(new TransformedObject(filledRect).setScale(0.1,1.5).setTranslation(0,-0.7).setColor("green"));
+		sunflowerTemp.add(new TransformedObject(sunflowerTop));
+		sunflowerTemp.add(new TransformedObject(leaf).setScale(1.3,1).setTranslation(0.2,-0.6));
+		sunflowerTemp.add(new TransformedObject(leaf).setScale(1.3,1).setTranslation(-0.2,-0.9));
+		sunflowerTemp.add(new TransformedObject(leaf).setScale(1.3,1).setTranslation(0.2,-1.2));
+		
+		sunflower = new TransformedObject(sunflowerTemp);
+		//-----------------------------------------------------------------------------------------end build sunflower
+		
+		//------------------------------------------------------------------------------------------------------create sonic character
+		var head = new CompoundObject();
+		head.add(new TransformedObject(filledCircle).setScale(1.05,1.05).setColor("blue"));
+		head.add(new TransformedObject(filledTriangle).setScale(0.7,0.7).setRotation(44).setTranslation(-0.29,0.3).setColor("blue"));
+		head.add(new TransformedObject(filledTriangle).setScale(0.5,0.5).setRotation(90).setTranslation(-0.38,-0.1).setColor("blue"));
+		head.add(new TransformedObject(filledCircle).setScale(1.05,0.6).setRotation(-20).setTranslation(0.1,0.2).setColor("blue"));
+		head.add(new TransformedObject(filledTriangle).setScale(0.3,0.3).setRotation(-25).setTranslation(0.2,0.45).setColor("blue"));
+		head.add(new TransformedObject(filledCircle).setScale(0.3,0.4).setRotation(45).setTranslation(0.1,-0.11).setColor("white"));
+		head.add(new TransformedObject(filledCircle).setScale(0.3,0.4).setRotation(90).setTranslation(0.3,-0.14).setColor("white"));
+		head.add(new TransformedObject(filledCircle).setScale(0.4,0.4).setRotation(90).setTranslation(0.2,-0.13).setColor("white"));
+		head.add(new TransformedObject(filledCircle).setScale(0.13,0.4).setRotation(0).setTranslation(0.23,0.0).setColor("black"));
+		head.add(new TransformedObject(filledCircle).setScale(1.05,0.4).setRotation(-25).setTranslation(0.1,0.2).setColor("blue"));
+		head.add(new TransformedObject(filledTriangle).setScale(0.3,0.3).setRotation(25).setTranslation(-0.15,0.3).setColor("#fa9c35"));
+		head.add(new TransformedObject(filledCircle).setScale(0.6,0.25).setRotation(25).setTranslation(0.21,-0.35).setColor("#fa9c35"));
+		head.add(new TransformedObject(filledCircle).setScale(0.6,0.28).setRotation(0).setTranslation(0.0,-0.38).setColor("#fa9c35"));
+		head.add(new TransformedObject(filledCircle).setScale(0.16,0.06).setRotation(10).setTranslation(0.54,-0.25).setColor("black"));
+		head.add(new TransformedObject(filledCircle).setScale(0.06,0.03).setRotation(10).setTranslation(0.54,-0.25).setColor("white"));
+		head.add(new TransformedObject(Ssmile).setScale(0.18,0.2).setRotation(170).setTranslation(0.32,-0.32));
+		
+		var body = new CompoundObject();
+		body.add(new TransformedObject(filledTriangle).setScale(0.7,0.5).setRotation(69).setTranslation(-0.3,-0.85).setColor("blue"));
+		body.add(new TransformedObject(filledCircle).setScale(0.7,1).setRotation(-20).setTranslation(-0.1,-0.9).setColor("blue"));
+		body.add(new TransformedObject(filledCircle).setScale(0.5,0.8).setRotation(-20).setTranslation(0.01,-0.9).setColor("#fa9c35"));
+		
+		var gloves = new CompoundObject();
+		gloves.add(new TransformedObject(filledCircle).setScale(0.1,0.2).setRotation(0).setTranslation(-0.71,-0.7).setColor("white"));
+		gloves.add(new TransformedObject(filledCircle).setScale(0.1,0.2).setRotation(0).setTranslation(-0.64,-0.7).setColor("white"));
+		gloves.add(new TransformedObject(circle).setScale(0.02,0.15).setRotation(0).setTranslation(-0.67,-0.7).setColor("black"));
+		gloves.add(new TransformedObject(filledCircle).setScale(0.02,0.15).setRotation(0).setTranslation(-0.67,-0.7).setColor("white"));
+		
+		var arm = new CompoundObject();
+		arm.add(new TransformedObject(filledRect).setScale(0.8,0.11).setRotation(0).setTranslation(-0.59,-0.7).setColor("#fa9c35"));
+		arm.add(new TransformedObject(filledCircle).setScale(0.35,0.35).setRotation(0).setTranslation(-0.9,-0.7).setColor("white"));
+		arm.add(new TransformedObject(gloves));
+		
+		
+		var tempshoe = new CompoundObject();
+		tempshoe.add(new TransformedObject(shoeOutln).setScale(0.55,0.55).setTranslation(-0.2,-0.54).setColor("red"));
+		tempshoe.add(new TransformedObject(filledRect).setScale(0.13,0.21).setRotation(0).setTranslation(0.135,-0.43).setColor("white"));
+		tempshoe.add(new TransformedObject(filledCircle).setScale(0.2,0.1).setRotation(0).setTranslation(0,-0.25).setColor("white"));
+		tempshoe.add(new TransformedObject(filledCircle).setScale(0.2,0.1).setRotation(0).setTranslation(0,-0.32).setColor("white"));
+		tempshoe.add(new TransformedObject(filledCircle).setScale(0.15,0.02).setRotation(0).setTranslation(-0,-0.28).setColor("white"));
+		tempshoe.add(new TransformedObject(circle).setScale(0.15,0.02).setRotation(0).setTranslation(-0,-0.28).setColor("black"));
+		
+		var pairShoestemp = new CompoundObject();
+		pairShoestemp.add(new TransformedObject(filledRect).setScale(0.11,0.6).setRotation(-30).setTranslation(-0.24,0.05).setColor("blue"));
+		pairShoestemp.add(new TransformedObject(filledRect).setScale(0.11,0.6).setRotation(10).setTranslation(0.16,-0.05).setColor("blue"));
+		pairShoestemp.add(new TransformedObject(tempshoe).setRotation(-35).setTranslation(-0.24,0));
+		pairShoestemp.add(new TransformedObject(tempshoe).setRotation(10).setTranslation(0.19,-0.16));
+		
+		pairShoes = new TransformedObject(pairShoestemp);
+		pairShoes2 = new TransformedObject(pairShoestemp);
+		
+		var sonicTemp = new CompoundObject();
+		sonicTemp.add(new TransformedObject(body).setTranslation(0,-0.03));
+		sonicTemp.add(new TransformedObject(head));
+		sonicTemp.add(new TransformedObject(arm));
+		sonicTemp.add(new TransformedObject(pairShoes).setTranslation(-0.27,-1.60));
+		sonicTemp.add(new TransformedObject(pairShoes2).setTranslation(-0.27,-1.60));
+		
+		sonic = new TransformedObject(sonicTemp);
+		//------------------------------------------------------------------------------------------------------end create sonic character
+		
+		
+		//------------------------------------------------------------------------------------------------------------build world
+		
+		world.add(new TransformedObject(Sky).setScale(1.7,1.7));
+		world.add(new TransformedObject(filledRect).setScale(8,5).setTranslation(0,-2.5).setColor("#4040e0"));//sea		
+		world.add(new TransformedObject(wave));
+		world.add(new TransformedObject(filledRect).setScale(8,2).setTranslation(0,-2.5).setColor("#631f00"));//ground brown
+		//-------------------------blocks for ground
+		for(i=-10;i<11;i++){
+			world.add(new TransformedObject(filledRect).setScale(0.2,0.2).setTranslation(i*0.4,-1.9).setColor("#c76300"));
+			world.add(new TransformedObject(filledRect).setScale(0.2,0.2).setTranslation(i*0.4 + 0.2,-2.1).setColor("#c76300"));
+			world.add(new TransformedObject(filledRect).setScale(0.2,0.2).setTranslation(i*0.4,-2.3).setColor("#c76300"));
+			world.add(new TransformedObject(filledRect).setScale(0.2,0.2).setTranslation(i*0.4 + 0.2,-2.5).setColor("#c76300"));
+			world.add(new TransformedObject(filledRect).setScale(0.2,0.2).setTranslation(i*0.4,-2.7).setColor("#c76300"));
+			world.add(new TransformedObject(filledRect).setScale(0.2,0.2).setTranslation(i*0.4 + 0.2,-2.9).setColor("#c76300"));
+		}
+		
+		world.add(new TransformedObject(line).setScale(8,2).setColor("white"));//horizon line
+		world.add(new TransformedObject(mountain));
+		world.add(new TransformedObject(sunflower).setScale(0.7,0.7).setTranslation(0,-0.35));
+		world.add(new TransformedObject(sunflower).setScale(0.7,0.7).setTranslation(3,-0.35));
+		world.add(new TransformedObject(sunflower).setScale(0.7,0.7).setTranslation(-3,-0.35));
+		world.add(new TransformedObject(filledRect).setScale(8,0.5).setTranslation(0,-1.6).setColor("green"));//grasss
+		//----------------------lines on grass
+		for(i= -9;i<10;i++){
+			world.add(new TransformedObject(hRect).setScale(0.5,0.5).setTranslation(i*1,-1.6).setColor("#00a600"));
+		}
+		
+		
+		world.add(new TransformedObject(sonic).setScale(0.4,0.4).setTranslation(-3.5,-0.7));
+		
+		
+		
+		
+		
+		
+		
+    }
+
+    /**
+     * This method is called just before each frame is drawn.  It updates the modeling
+     * transformations of the objects in the scene that are animated.
+     */
+    function updateFrame() {
+        frameNumber++;
+
+        // TODO: Update state in preparation for drawing the next frame.
+		sun.setRotation(frameNumber*0.35);
+        Sky.setRotation(-frameNumber*0.05);
+		pairShoes.setRotation(-frameNumber*200);
+		pairShoes2.setRotation(-frameNumber*100);
+        sonic.setTranslation(-3 + 22*(frameNumber % 1000) / 1000.0, 0);
+		wave.setTranslation(-3 + -2*(frameNumber % 1000) / 1000.0, 0);
+		sunflowerTop.setRotation(frameNumber*0.1);
+		leaf.setRotation(Math.sin(frameNumber/20)*6);
+    }
+
+
+    //------------------- A Simple Scene Object-Oriented Scene Graph API ----------------
+
+    /**
+     * The (abstract) base class for all nodes in the scene graph data structure.
+     */
+    function SceneGraphNode() {
+        this.fillColor = null;   // If non-null, the default fillStyle for this node.
+        this.strokeColor = null; // If non-null, the default strokeStyle for this node.
+    }
+    SceneGraphNode.prototype.doDraw = function(g) {
+            // This method is meant to be abstract and must be OVERRIDDEN in an actual
+            // object. It is not meant to be called; it is called by draw().
+        throw "doDraw not implemented in SceneGraphNode"
+    }
+    SceneGraphNode.prototype.draw = function(g) {
+           // This method should be CALLED to draw the object It should NOT
+           // ordinarily be overridden in subclasses.
+        graphics.save();
+        if (this.fillColor) {
+            g.fillStyle = this.fillColor;
+        }
+        if (this.strokeColor) {
+            g.strokeStyle = this.strokeColor;
+        }
+        this.doDraw(g);
+        graphics.restore();
+    }
+    SceneGraphNode.prototype.setFillColor = function(color) {
+            // Sets fillColor for this node to color.
+            // Color should be a legal CSS color string, or null.
+        this.fillColor = color;
+        return this;
+    }
+    SceneGraphNode.prototype.setStrokeColor = function(color) {
+            // Sets strokeColor for this node to color.
+            // Color should be a legal CSS color string, or null.
+        this.strokeColor = color;
+        return this;
+    }
+    SceneGraphNode.prototype.setColor = function(color) {
+            // Sets both the fillColor and strokeColor to color.
+            // Color should be a legal CSS color string, or null.
+        this.fillColor = color;
+        this.strokeColor = color;
+        return this;
+    }
+
+    /**
+     *  Defines a subclass, CompoundObject, of SceneGraphNode to represent
+     *  an object that is made up of sub-objects.  Initially, there are no
+     *  sub-objects.  Objects are added with the add() method.
+     */
+    function CompoundObject() {
+        SceneGraphNode.call(this);  // do superclass initialization
+        this.subobjects = [];  // the list of sub-objects of this object
+    }
+    CompoundObject.prototype = new SceneGraphNode(); // (makes it a subclass!)
+    CompoundObject.prototype.add = function(node) {
+        this.subobjects.push(node);
+        return this;
+    }
+    CompoundObject.prototype.doDraw = function(g) {
+            // Just call the sub-objects' draw() methods.
+        for (var i = 0; i < this.subobjects.length; i++)
+            this.subobjects[i].draw(g);
+    }
+
+    /**
+     *  Define a subclass, TransformedObject, of SceneGraphNode that
+     *  represents an object along with a modeling transformation to
+     *  be applied to that object.  The object must be specified in
+     *  the constructor.  The transformation is specified by calling
+     *  the setScale(), setRotate() and setTranslate() methods. Note that
+     *  each of these methods returns a reference to the TransformedObject
+     *  as its return value, to allow for chaining of method calls.
+     *  The modeling transformations are always applied to the object
+     *  in the order scale, then rotate, then translate.
+     */
+    function TransformedObject(object) {
+        SceneGraphNode.call(this);  // do superclass initialization
+        this.object = object;
+        this.rotationInDegrees = 0;
+        this.scaleX = 1;
+        this.scaleY = 1;
+        this.translateX = 0;
+        this.translateY = 0;
+    }
+    TransformedObject.prototype = new SceneGraphNode();  // (makes it a subclass!)
+    TransformedObject.prototype.setRotation = function(angle) {
+           // Set the angle of rotation, measured in DEGREES.  The rotation
+           // is always about the origin.
+        this.rotationInDegrees = angle;
+        return this;
+    }
+    TransformedObject.prototype.setScale = function(sx, sy) {
+           // Sets scaling factors.
+        this.scaleX = sx;
+        this.scaleY = sy;
+        return this;
+    }
+    TransformedObject.prototype.setTranslation = function(dx,dy) {
+           // Set translation mounts.
+        this.translateX = dx;
+        this.translateY = dy;
+        return this;
+    }
+    TransformedObject.prototype.doDraw = function(g) {
+            // Draws the object, with its modeling transformation.
+        g.save();
+        if (this.translateX != 0 || this.translateY != 0) {
+            g.translate(this.translateX, this.translateY);
+        }
+        if (this.rotationInDegrees != 0) {
+            g.rotate(this.rotationInDegrees/180*Math.PI);
+        }
+        if (this.scaleX != 1 || this.scaleY != 1) {
+            g.scale(this.scaleX, this.scaleY);
+        }
+        this.object.draw(g);
+        g.restore();
+    }
+
+           // Create some basic shapes as custom SceneGraphNode objects.
+
+    var line = new SceneGraphNode();  // Line from (-0.5,0) to (0.5,0)
+    line.doDraw = function(g) {
+        g.beginPath();
+        g.moveTo(-0.5,0);
+        g.lineTo(0.5,0);
+        g.stroke();
+    }
+
+    var filledRect = new SceneGraphNode();  // Filled square, size = 1, center = (0,0)
+    filledRect.doDraw = function(g) {
+        g.fillRect(-0.5,-0.5,1,1);
+    }
+
+    var rect = new SceneGraphNode(); // Stroked square, size = 1, center = (0,0)
+    rect.doDraw = function(g) {
+        g.strokeRect(-0.5,-0.5,1,1);
+    }
+
+    var filledCircle = new SceneGraphNode(); // Filled circle, diameter = 1, center = (0,0)
+    filledCircle.doDraw = function(g) {
+        g.beginPath();
+        g.arc(0,0,0.5,0,2*Math.PI);
+        g.fill();
+    }
+	
+	var smicircle = new SceneGraphNode(); // filled semi circle center 0,0
+	smicircle.doDraw = function(g){
+		g.beginPath();
+		g.arc(0,0,0.5,0,Math.PI);
+		g.fill();
+	}
+	
+	var Ssmile = new SceneGraphNode(); // draw a curved line from 0,0 to make a smile
+	Ssmile.doDraw = function(g){
+		g.beginPath();
+		g.moveTo(0, 0);
+		g.bezierCurveTo(1,1, 1.3,0.70, 2.20,0.60);
+		g.stroke();
+	 
+	}
+	
+	var hRect = new SceneGraphNode(); //a fillrd rectangle sheared to the right
+	hRect.doDraw = function(g){
+		g.save();
+		g.transform(1, 0, -1.5, 1, 0, 0);
+		 g.fillRect(-0.5,-0.5,1,1);
+		g.restore();
+	 
+	}
+	
+	
+	var shoeOutln = new SceneGraphNode();
+	shoeOutln.doDraw = function(g){
+		g.beginPath();
+		g.moveTo(0, 0);
+		g.bezierCurveTo(0,0.6, 0.8,0.5, 1.30,0);
+		g.stroke();
+		g.closePath();
+		g.fill();
+	}
+
+    var circle = new SceneGraphNode();// Stroked circle, diameter = 1, center = (0,0)
+    circle.doDraw = function(g) {
+        g.beginPath();
+        g.arc(0,0,0.5,0,2*Math.PI);
+        g.stroke();
+    }
+
+    var filledTriangle = new SceneGraphNode(); // Filled Triangle, width 1, height 1, center of base at (0,0)
+    filledTriangle.doDraw = function(g) {
+        g.beginPath();
+        g.moveTo(-0.5,0);
+        g.lineTo(0.5,0);
+        g.lineTo(0,1);
+        g.closePath();
+        g.fill();
+    }
+
+
+
+    // ------------------------------- graphics support functions --------------------------
+
+    /**
+      * Draw one frame of the animation.  Probably doesn't need to be changed,
+      * except maybe to change the setting of preserveAspect in applyLimits().
+      */
+    function draw() {
+        graphics.save();  // to make sure changes don't carry over from one call to the next
+        graphics.fillStyle = BACKGROUND;  // background color
+        graphics.fillRect(0,0,canvas.width,canvas.height);
+        graphics.fillStyle = "black";
+        applyLimits(graphics,X_LEFT,X_RIGHT,Y_TOP,Y_BOTTOM,false);
+        graphics.lineWidth = pixelSize;  // Use 1 pixel as the default line width
+        world.draw(graphics);
+        graphics.restore();
+    }
+
+    /**
+     * Applies a coordinate transformation to the graphics context, to map
+     * xleft,xright,ytop,ybottom to the edges of the canvas.  This is called
+     * by draw().  This does not need to be changed.
+     */
+    function applyLimits(g, xleft, xright, ytop, ybottom, preserveAspect) {
+       var width = canvas.width;   // The width of this drawing area, in pixels.
+       var height = canvas.height; // The height of this drawing area, in pixels.
+       if (preserveAspect) {
+             // Adjust the limits to match the aspect ratio of the drawing area.
+          var displayAspect = Math.abs(height / width);
+          var requestedAspect = Math.abs(( ybottom-ytop ) / ( xright-xleft ));
+          var excess;
+          if (displayAspect > requestedAspect) {
+             excess = (ybottom-ytop) * (displayAspect/requestedAspect - 1);
+             ybottom += excess/2;
+             ytop -= excess/2;
+          }
+          else if (displayAspect < requestedAspect) {
+             excess = (xright-xleft) * (requestedAspect/displayAspect - 1);
+             xright += excess/2;
+             xleft -= excess/2;
+          }
+       }
+       var pixelWidth = Math.abs(( xright - xleft ) / width);
+       var pixelHeight = Math.abs(( ybottom - ytop ) / height);
+       pixelSize = Math.min(pixelWidth,pixelHeight);
+       g.scale( width / (xright-xleft), height / (ybottom-ytop) );
+       g.translate( -xleft, -ytop );
+    }
+
+
+    //------------------ Animation framework ------------------------------
+
+    var running = false;  // This is set to true when animation is running
+
+    function frame() {
+        if (running) {
+               // Draw one frame of the animation, and schedule the next frame.
+            updateFrame();
+            draw();
+            requestAnimationFrame(frame);
+        }
+    }
+
+    function doAnimationCheckbox() {
+        var shouldRun = document.getElementById("animateCheck").checked;
+        if ( shouldRun != running ) {
+            running = shouldRun;
+            if (running)
+                requestAnimationFrame(frame);
+        }
+    }
+
+    //----------------------- initialization -------------------------------
+
+    function init() {
+        canvas = document.getElementById("thecanvas");
+        if (!canvas.getContext) {
+            document.getElementById("message").innerHTML = "ERROR: Canvas not supported";
+            return;
+        }
+        graphics = canvas.getContext("2d");
+        document.getElementById("animateCheck").checked = false;
+        document.getElementById("animateCheck").onchange = doAnimationCheckbox;
+        createWorld();
+        draw();
+    }
+
+</script>
+
+</head>
+
+<body onload="init()" style="background-color:#EEEEEE">
+
+<h3>Scene Graph 2D</h3>
+
+<noscript>
+   <p><b style="color:red">Error: This page requires JavaScript, but it is not available.</b></p>
+</noscript>
+
+<p id="message"><label><input type="checkbox" id="animateCheck"><b>Run the Animation</b></label></p>
+
+<div style="float:left; border: 2px solid black">
+<canvas id="thecanvas" width="800" height="600" style="display:block"></canvas>
+</div>
+
+
+</body>
+</html>
